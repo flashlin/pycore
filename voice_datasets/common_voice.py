@@ -1,6 +1,9 @@
+import pandas as pd
+
 from common.csv_utils import CsvReader
 from common.io import get_dir, get_file_name
 from common.input_tw import remove_special_symbol
+
 
 def common_voice_metadata_iter(tsv_file_path):
     base_dir = get_dir(tsv_file_path)
@@ -14,3 +17,14 @@ def common_voice_metadata_iter(tsv_file_path):
             wav_filepath = f"{base_dir}/clips/{filename}.wav"
             sentence = remove_special_symbol(row[2])
             yield wav_filepath, sentence
+
+
+def get_all_common_voice_metadata_dataframe(base_dir):
+    df = pd.DataFrame(columns=['wav_filepath', 'trans'])
+    for wav_filepath, trans in common_voice_metadata_iter(f"{base_dir}/train.tsv"):
+        df = df.append({
+            'wav_filepath': wav_filepath,
+            'trans': trans
+        }, ignore_index=True)
+    return df
+
