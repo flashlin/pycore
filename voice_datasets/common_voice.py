@@ -21,10 +21,17 @@ def common_voice_metadata_iter(tsv_file_path):
 
 def get_all_common_voice_metadata_dataframe(base_dir):
     df = pd.DataFrame(columns=['wav_filepath', 'trans'])
+    index = 0
     for wav_filepath, trans in common_voice_metadata_iter(f"{base_dir}/train.tsv"):
+        # series = pd.Series({
+        #     'wav_filepath': wav_filepath,
+        #     'trans': trans
+        # }, name=f"{index}")
+        # df = df.append(series, ignore_index=False)
         df = df.append({
             'wav_filepath': wav_filepath,
             'trans': trans
         }, ignore_index=True)
+        index += 1
     return df
 
