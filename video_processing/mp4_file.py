@@ -2,9 +2,9 @@
 pip3 install moviepy
 """
 from datetime import timedelta
-
+from moviepy.editor import VideoFileClip
 from common.io import get_dir, get_file_name, info
-from video_processing.srt_file import get_srt_clip, write_clip_srt_file
+from video_processing.srt_file import get_srt_clip, write_clip_srt_file, get_srt_file_metadata_iter
 
 
 def write_slice_mp4_file(mp4_filepath: str, start_time: timedelta, end_time: timedelta, target_filepath: str):

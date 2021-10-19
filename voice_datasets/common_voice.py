@@ -19,10 +19,13 @@ def common_voice_metadata_iter(tsv_file_path):
             yield wav_filepath, sentence
 
 
-def get_all_common_voice_metadata_dataframe(base_dir):
+def get_all_common_voice_metadata_dataframe(base_dir, fn_filter=None):
     df = pd.DataFrame(columns=['wav_filepath', 'trans'])
     index = 0
     for wav_filepath, trans in common_voice_metadata_iter(f"{base_dir}/train.tsv"):
+        if fn_filter is not None:
+            if not fn_filter(wav_filepath, trans):
+                continue
         # series = pd.Series({
         #     'wav_filepath': wav_filepath,
         #     'trans': trans
