@@ -843,3 +843,9 @@ class PinyinVocabulary:
 
     def get_size(self):
         return len(self.char_to_idx.keys())
+
+
+def text_to_pinyin(trans):
+    norm_text = normal_text(trans)
+    pinyin_text = chinese_to_pinyin(norm_text)
+    return pinyin_text
