@@ -37,4 +37,3 @@ def get_all_common_voice_metadata_dataframe(base_dir, fn_filter=None):
         }, ignore_index=True)
         index += 1
     return df
-

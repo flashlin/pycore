@@ -51,6 +51,15 @@ def remove_files(files):
             print("Error: %s : %s" % (file, e.strerror))
 
 
+def get_files_iter_by_pattern(folder, pattern):
+    regex = re.compile(pattern)
+    files = glob.glob(f"{folder}/*.*")
+    for file in files:
+        match = regex.search(file)
+        if match:
+            yield file
+
+
 def get_file_list_by_pattern(folder, pattern):
     regex = re.compile(pattern)
     files = glob.glob(f"{folder}/*.*")

@@ -29,6 +29,13 @@ def write_clip_wav_file(mp4_filepath: str, start_time: timedelta, end_time: time
     write_video_to_mono_wav(clip, target_filepath)
 
 
+def get_video_clip(video_file_clip, start_time, end_time):
+    start_seconds = start_time.total_seconds()
+    end_seconds = end_time.total_seconds()
+    video_clip = video_file_clip.subclip(start_seconds, end_seconds)
+    return video_clip
+
+
 def get_mp4_to_clip_srt_iter(mp4_filepath: str):
     mp4_dir = get_dir(mp4_filepath)
     filename = get_file_name(mp4_filepath)
@@ -36,9 +43,10 @@ def get_mp4_to_clip_srt_iter(mp4_filepath: str):
     clip_idx = 0
     for start_time, end_time, caption in get_srt_file_metadata_iter(srt_filepath):
         clip_name = f"{filename}-{clip_idx:0>4d}"
-        start_seconds = start_time.total_seconds()
-        end_seconds = end_time.total_seconds()
-        video_clip = VideoFileClip(mp4_filepath).subclip(start_seconds, end_seconds)
+        # start_seconds = start_time.total_seconds()
+        # end_seconds = end_time.total_seconds()
+        # video_clip = VideoFileClip(mp4_filepath).subclip(start_seconds, end_seconds)
+        video_clip = get_video_clip(VideoFileClip(mp4_filepath), start_time, end_time)
         srt_clip = get_srt_clip(start_time, end_time, caption)
 
         yield {

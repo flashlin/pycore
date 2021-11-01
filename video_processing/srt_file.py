@@ -58,12 +58,17 @@ def convert_timedelta_to_srt_time_format(t: timedelta) -> str:
     return f"{hour:0>2d}:{minute:0>2d}:{second:0>2d},{milli_second:0>3d}"
 
 
+def get_srt_timestamp_line(start_time: timedelta, end_time: timedelta) -> str:
+    srt_line = f"{convert_timedelta_to_srt_time_format(start_time)}" \
+               f" --> " \
+               f"{convert_timedelta_to_srt_time_format(end_time)}"
+    return srt_line
+
+
 def get_srt_clip(start_time: timedelta, end_time: timedelta, caption: str):
     part_start = start_time - start_time
     part_end = end_time - start_time
-    srt_line = f"{convert_timedelta_to_srt_time_format(part_start)}" \
-               f" --> " \
-               f"{convert_timedelta_to_srt_time_format(part_end)}"
+    srt_line = get_srt_timestamp_line(part_start, part_end)
     srt_content = f"{srt_line}\n{caption}\n"
     return srt_content
 
@@ -72,3 +77,5 @@ def write_clip_srt_file(start_time, end_time, caption, target_srt_filepath):
     slice_srt_content = get_srt_clip(start_time, end_time, caption)
     with open(target_srt_filepath, "w", encoding='utf-8') as f:
         f.write(f"{slice_srt_content}")
+
+

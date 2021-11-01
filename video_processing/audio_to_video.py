@@ -4,8 +4,9 @@ import platform
 
 import librosa
 from matplotlib import pyplot as plt
+from pydub import AudioSegment
 
-from common.io import get_dir, get_file_name
+from common.io import get_dir, get_file_name, get_dir_file_name
 
 
 def read_wav_data(wav_filepath):
@@ -64,3 +65,5 @@ def save_waveform_to_image(waveform, sample_rate, image_filepath, text=''):
     # import IPython.display as ipd
     # ipd.display(ipd.Audio(data=waveform, rate=sample_rate))
     plt.savefig(image_filepath)
+
+
